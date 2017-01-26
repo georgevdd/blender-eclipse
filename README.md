@@ -14,7 +14,6 @@ Advantages include:
 * No need to install and maintain a separate Python interpreter.
 * Ability to launch Blender directly from within Eclipse.
 
-
 # Prerequisites
 
 * Install [Blender](http://www.blender.org)
@@ -22,6 +21,14 @@ Advantages include:
 * Install [PyDev](http://www.pydev.org/) (by adding http://www.pydev.org/updates/ to Eclipse's
 Update Manager).
 
+---
+
+NOTE: These instructions assume for the sake of example that Blender
+is version 2.77 and that it's installed on OSX at
+`/Applications/Blender/blender.app`, but it should not be hard to work
+out how to adapt the paths in this document to match your own installation.
+
+---
 
 # Download
 
