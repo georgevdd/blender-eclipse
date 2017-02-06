@@ -169,15 +169,18 @@ ln -s path/to/repo/eclipse_connector.py .
   Standard output from Blender should appear in the Eclipse console
   view. You should see a small amount of logging from Eclipse
   Connector.
-3. Within Blender, any text block that you create can now `import
-   pydevd` and `pydevd.settrace()`. When you choose Run Script within
-   Blender, control will break into the Eclipse debugger at the
-   statement following `pydevd.settrace()`. You can now step through
-   your script within the debugger. When you choose Resume (F8) within
-   Eclipse, control returns to Blender.
+3. Within Blender, make sure that the `.blend` file whose scripts you
+   wish to debug is open.
+4. Within Eclipse, set any breakpoints in the scripts to be debugged.
+5. Within Blender, when you choose Run Script within Blender, control
+   will break into the Eclipse debugger when any breakpoint is
+   hit. You can now step through your script within the debugger. When
+   you choose Resume (F8) within Eclipse, control returns to Blender.
 
 ---
 
-TODO: Work out why breakpoints set within Eclipse don't seem to work.
+TODO: Work out how to remap breakpoints whenever the `.blend` file is
+reloaded in Blender, so that breakpoints set from Eclipse before
+Blender is started are dealt with properly.
 
 ---
