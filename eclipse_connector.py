@@ -2,6 +2,7 @@ import os
 import sys
 
 import bpy
+from fileinput import filename
 
 bl_info = {
     "name": "Eclipse Connector",
@@ -61,38 +62,45 @@ def _maybe_set_up_debug_logging():
     _debug_print = print
 
 
-def _wrap_norm_file_to_server(original_norm_file_to_server):
-  def _norm_file_to_server(path):
-    """Translates Eclipse breakpoint filepaths to Blender breakpoint filepaths.
+def _wrap_norm_path(pydevd_norm_path):
+  def _blender_norm_path(filename, normpath):
+    """Calculate the real path for a module path reported by Blender.
 
-    When setting breakpoints, PyDev uses its `norm_file_to_server()` function
-    to translate a Python module path from that seen by Eclipse to that
-    required by a remote debugger. But Blender expects the module path of a text
-    block (even if it's external) to be of the form
-    <blend_file_path>/<text_block_name>.
+    When executing code from a script within a .blend file, Blender sets the
+    frame's module path to be of the form <blend_file_path>/<text_block_name>
+    (even if the script is external).
 
-    Monkey-patching norm_file_to_server() allows translation into Blender's
-    internal module naming scheme, so that breakpoints set within Eclipse work
-    as expected.
+    PyDev uses its `_NormPath()` function to compute a real filename for code
+    loaded from eggs etc, so monkey-patching that is a natural way to add
+    support for code from .blend files.
 
     Args:
-      path: A path to a Python module
+      filename: A path to a Python module, e.g. from frame.f_code.co_filename,
+          which may refer to a code block within a .blend file.
+      normpath: A further path normalisation function (as for
+          pydevd_file_utils._NormPath).
 
     Returns:
-      A path to the Blender text block that is associated with the given
-      path (if there is such a text block), otherwise the result of PyDev's
-      usual client-to-server path translation mechanism.
+      A path to the external file that is associated with the given
+      path (if the given path refers to a Blender text block) otherwise the
+      result of PyDev's usual _NormPath() path translation mechanism.
     """
-    server_path = original_norm_file_to_server(path)
-    _debug_print('NORM_FILE_TO_SERVER (1):', path, '->', server_path)
-    for text in getattr(bpy.data, 'texts', ()):
-      if text.filepath == server_path:
-        blender_path = bpy.data.filepath + os.path.sep + text.name
-        _debug_print('NORM_FILE_TO_SERVER (2):', server_path, '->', blender_path)
-        return blender_path
-    return server_path
-  return _norm_file_to_server
+    _debug_print('NORM_PATH (0):', filename)
+    blend_filename = getattr(bpy.data, 'filepath', ())
+    if blend_filename:
+      _debug_print('NORM_PATH (1):', blend_filename)
+    if filename.startswith(blend_filename):
+      text_block_name = filename[len(blend_filename) + 1:]
+      _debug_print('NORM_PATH (2):', text_block_name)
+      text_block = getattr(bpy.data, 'texts', {}).get(text_block_name)
+      if text_block:
+        _debug_print('NORM_PATH (3):', text_block.filepath)
+        normed_path = pydevd_norm_path(text_block.filepath, normpath)
+        _debug_print('NORM_PATH (4):', normed_path)
+        return normed_path
+    return pydevd_norm_path(filename, normpath)
 
+  return _blender_norm_path
 
 def register():
   _maybe_set_up_debug_logging()
@@ -100,8 +108,7 @@ def register():
   _ensure_pydev_on_sys_path(pydev_src_path)
 
   import pydevd_file_utils
-  pydevd_file_utils.norm_file_to_server = _wrap_norm_file_to_server(
-      pydevd_file_utils.norm_file_to_server)
+  pydevd_file_utils._NormPath = _wrap_norm_path(pydevd_file_utils._NormPath)
 
   import pydevd
   if 'ECLIPSE_CONNECTOR_DEBUG' in os.environ:
