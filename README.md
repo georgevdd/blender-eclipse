@@ -137,6 +137,7 @@ checks that they've been done.
       Eclipse workspace.
     - Environment
       - `PYDEV_SRC_PATH` `${bundle_location:org.python.pydev}/pysrc`
+    
         This setting tells the Eclipse Connector for Blender where it
         should find the PyDev source code.
     - Apply
