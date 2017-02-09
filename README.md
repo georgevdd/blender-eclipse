@@ -129,6 +129,7 @@ checks that they've been done.
 /Users/georgevdd/src/blender/eclipse_blend.blend
 --addons eclipse_connector
 ```
+
       You can omit the path to a `.blend` file if you'd rather start
       with whatever Blender thinks your default startup file is.
       Also the `--window-geometry` setting is optional; I use it
