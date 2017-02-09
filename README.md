@@ -127,7 +127,8 @@ checks that they've been done.
       ```
 --window-geometry 960 0 960 10000
 /Users/georgevdd/src/blender/eclipse_blend.blend
---addons eclipse_connector```
+--addons eclipse_connector
+      ```
 
       You can omit the path to a `.blend` file if you'd rather start
       with whatever Blender thinks your default startup file is.
