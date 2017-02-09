@@ -9,9 +9,11 @@ These tools build on the instructions on the
 and the original [book of Eclipse/Blender instructions](http://airplanes3d.net/downloads/pydev/pydev-blender-en.pdf) by Witold Jaworski.
 
 Advantages include:
-* No need to work out exactly where PyDev stores its source code.
-* No need to update your scripts when you upgrade PyDev.
+* Set breakpoints from within Eclipse, without littering your code
+  with `pydevd.settrace()` calls.
 * No need to install and maintain a separate Python interpreter.
+* No need to work out exactly where PyDev stores its source code, or
+  to update your scripts when you upgrade PyDev.
 * Ability to launch Blender directly from within Eclipse.
 
 # Prerequisites
