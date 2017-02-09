@@ -137,11 +137,13 @@ checks that they've been done.
       Eclipse workspace.
     - Environment
       - `PYDEV_SRC_PATH` `${bundle_location:org.python.pydev}/pysrc`
+        This setting tells the Eclipse Connector for Blender where it
+        should find the PyDev source code.
     - Apply
 
 ---
 
-NOTE: The new Run Configuration *must* be given a valid Project field, otherwise
+NOTE: The new Run Configuration *must* be given a valid "Project" field, otherwise
 it will silently not set up its environment variables properly. It's
 not clear to me why this is.
 
