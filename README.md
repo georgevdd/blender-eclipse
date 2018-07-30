@@ -138,7 +138,7 @@ checks that they've been done.
       to make the Blender window show up where it doesn't cover my
       Eclipse workspace.
     - Environment
-      - `PYDEV_SRC_PATH`: `${bundle_location:org.python.pydev}/pysrc`
+      - `PYDEV_SRC_PATH`: `${bundle_location:org.python.pydev.core}/pysrc:${bundle_location:org.python.pydev}/pysrc`
     
         This setting tells the Eclipse Connector for Blender where it
         should find the PyDev source code.
