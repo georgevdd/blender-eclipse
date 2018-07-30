@@ -31,13 +31,16 @@ def _dump_startup_info():
 
 def _locate_pydev():
   try:
-    pydev_src_path = os.environ['PYDEV_SRC_PATH']
-  except KeyError as e:
+    pydev_src_paths = os.environ['PYDEV_SRC_PATH']
+  except KeyError:
     raise EnvironmentError(
       'PYDEV_SRC_PATH should have been set by Eclipse Run Configuration')
-  if not os.path.isdir(pydev_src_path):
-    raise EnvironmentError("'{}' is not a directory".format(pydev_src_path))
-  return pydev_src_path
+  pydev_src_paths = pydev_src_paths.split(':')
+  for path in pydev_src_paths:
+    if os.path.isfile(os.path.join(path, 'pydevd.py')):
+      return path
+  raise EnvironmentError(
+    'No usable pydev source directory found among {}'.format(pydev_src_paths))
 
 
 def _ensure_pydev_on_sys_path(pydev_src_path):
@@ -63,6 +66,7 @@ def _maybe_set_up_debug_logging():
 
 
 def _wrap_norm_path(pydevd_norm_path):
+
   def _blender_norm_path(filename, normpath):
     """Calculate the real path for a module path reported by Blender.
 
@@ -101,6 +105,7 @@ def _wrap_norm_path(pydevd_norm_path):
     return pydevd_norm_path(filename, normpath)
 
   return _blender_norm_path
+
 
 def register():
   _maybe_set_up_debug_logging()
