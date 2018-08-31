@@ -166,17 +166,18 @@ ln -s path/to/repo/eclipse_connector.py .
 
 # Usage
 
-1. Make sure the PyDev debugger server is running:
-  - Window -> Perspective -> Open Perspective -> Debug
-  - PyDev -> Start Debug Server
+1.  Make sure the PyDev debugger server is running:
+    - Window -> Perspective -> Open Perspective -> Debug
+    - PyDev -> Start Debug Server
 2. Launch Blender from Eclipse
-  - Click on the `PyBlend` project
-  - (Run icon) -> Blender Subprocess
-  
-  Standard output from Blender should appear in the Eclipse console
-  view. You should see a small amount of logging from Eclipse
-  Connector.
+    - Click on the `PyBlend` project
+    - (Run icon) -> Blender Subprocess
+
+   Standard output from Blender should appear in the Eclipse console
+   view. You should see a small amount of logging from Eclipse
+   Connector.
 3. Within Blender, when you choose "Run Script" within Blender, control
-   will break into the Eclipse debugger when any breakpoint is
-   hit. You can now step through your script within the debugger. When
-   you choose Resume (F8) within Eclipse, control returns to Blender.
+    will break into the Eclipse debugger when any breakpoint is
+    hit. You can now step through your script within the debugger. When
+    you choose Resume (F8) within Eclipse, control returns to Blender.
+
