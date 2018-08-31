@@ -181,3 +181,14 @@ ln -s path/to/repo/eclipse_connector.py .
     hit. You can now step through your script within the debugger. When
     you choose Resume (F8) within Eclipse, control returns to Blender.
 
+## Reloading Code Without Restarting Blender
+
+If you make changes to a Python script in Eclipse after you have
+run the script in Blender, Blender will not automatically notice those
+changes. The next time you try to run the script in Blender, you will
+see that it runs the old code. (This is because Blender is secretly
+less of a graphics program with a Python subsystem in it, than
+a Python interpreter with a graphics subsystem in it.)
+
+To work around this, have Blender run the script indirectly by
+[Executing External Scripts](https://docs.blender.org/api/2.79/info_tips_and_tricks.html#executing-external-scripts).
