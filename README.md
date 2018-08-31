@@ -176,7 +176,7 @@ ln -s path/to/repo/eclipse_connector.py .
    Standard output from Blender should appear in the Eclipse console
    view. You should see a small amount of logging from Eclipse
    Connector.
-3. Within Blender, when you choose "Run Script" within Blender, control
+3. Within Blender, when you choose "Run Script", control
     will break into the Eclipse debugger when any breakpoint is
     hit. You can now step through your script within the debugger. When
     you choose Resume (F8) within Eclipse, control returns to Blender.
